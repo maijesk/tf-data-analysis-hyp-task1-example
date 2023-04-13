@@ -10,8 +10,11 @@ def solution(x_success: int,
              x_cnt: int, 
              y_success: int, 
              y_cnt: int) -> bool:
-  alpha = 0.01
-  count = np.array([x_success, y_success])
-  nobs = np.array([x_cnt, y_cnt])
-  zstat, p_value = proportions_ztest(count=count, nobs=nobs, alternative='smaller')
-  return p_value < alpha
+  
+    from statsmodels.stats.proportion import proportions_ztest
+
+    p_val_0 = 0.01
+    zstat, p_val_1 = proportions_ztest([x_success, y_success], [x_cnt, y_cnt], 
+                                       alternative='two-sided')
+
+    return p_val_1 < p_val_0
